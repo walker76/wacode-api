@@ -2,6 +2,8 @@ package api.controller;
 
 import api.domain.user.User;
 import api.domain.user.UserRequest;
+import api.exceptions.UserNotRegistered;
+import api.exceptions.UserNotRegisteredException;
 import api.repository.AuthRepository;
 import api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,11 @@ public class UserController {
     @GetMapping("/findById/{id:.+}")
     public User findById(@PathVariable("id") long id){
         Optional<User> userOptional = this.userRepository.findById(id);
-        return userOptional.isPresent() ? userOptional.get() : null;
+        if(userOptional.isPresent()){
+            return userOptional.get();
+        } else {
+            throw new UserNotRegisteredException();
+        }
     }
 
     @PutMapping("/register")
