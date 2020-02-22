@@ -1,7 +1,6 @@
 package api.controller;
 
 import api.domain.order.*;
-import api.domain.user.User;
 import api.repository.DeviceRepository;
 import api.repository.OrderRepository;
 import api.repository.UserRepository;
@@ -15,13 +14,9 @@ import java.util.Optional;
 public class OrderController {
 
     private OrderRepository orderRepository;
-    private UserRepository userRepository;
-    private DeviceRepository deviceRepository;
 
-    public OrderController(OrderRepository orderRepository, UserRepository userRepository, DeviceRepository deviceRepository) {
+    public OrderController(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
-        this.deviceRepository = deviceRepository;
     }
 
     @GetMapping("/all")
@@ -61,10 +56,9 @@ public class OrderController {
         }
     }
 
-    @PutMapping("/insert")
+    @PutMapping("/makeOrder")
     public void insert(@RequestBody OrderRequest orderRequest){
-        Order newOrder = new Order(orderRequest);
-        this.orderRepository.insert(newOrder);
+        this.orderRepository.insert(new Order(orderRequest));
     }
 
     @PostMapping("/update")
