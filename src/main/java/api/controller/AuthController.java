@@ -21,8 +21,9 @@ public class AuthController {
     }
 
     @PutMapping("/register")
-    public void register(@RequestBody AuthRecord record){
+    public AuthRecord register(@RequestBody AuthRecord record){
         this.authRepository.insert(record);
+        return record;
     }
 
     @PostMapping("/update")
