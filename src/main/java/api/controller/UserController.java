@@ -1,6 +1,5 @@
 package api.controller;
 
-import api.domain.job.Job;
 import api.domain.user.User;
 import api.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
@@ -25,21 +24,21 @@ public class UserController {
     }
 
     @GetMapping("/findById/{id:.+}")
-    public User findById(@PathVariable("id") String id){
+    public User findById(@PathVariable("id") long id){
         Optional<User> userOptional = this.userRepository.findById(id);
         return userOptional.isPresent() ? userOptional.get() : null;
     }
 
-    @GetMapping("/findJobsById/{id:.+}")
-    public List<String> findJobsById(@PathVariable("id") String id){
+    @GetMapping("/findOrdersById/{id:.+}")
+    public List<Long> findJobsById(@PathVariable("id") long id){
         Optional<User> userOptional = this.userRepository.findById(id);
-        List<String> ret = new ArrayList<>();
+        List<Long> ret = new ArrayList<>();
 
         if(userOptional.isPresent()){
             User user = userOptional.get();
-            List<String> posted = user.getJobsPosted();
-            List<String> working = user.getJobsWorking();
-            List<String> combined = new ArrayList<>();
+            List<Long> posted = user.getJobsPosted();
+            List<Long> working = user.getJobsWorking();
+            List<Long> combined = new ArrayList<>();
             combined.addAll(working);
             combined.addAll(posted);
             return combined;
@@ -47,10 +46,10 @@ public class UserController {
         return ret;
     }
 
-    @GetMapping("/findWorkingJobsById/{id:.+}")
-    public List<String> findWorkingJobsById(@PathVariable("id") String id){
+    @GetMapping("/findWorkingOrdersById/{id:.+}")
+    public List<Long> findWorkingJobsById(@PathVariable("id") long id){
         Optional<User> userOptional = this.userRepository.findById(id);
-        List<String> ret = new ArrayList<>();
+        List<Long> ret = new ArrayList<>();
 
         if(userOptional.isPresent()){
             User user = userOptional.get();
@@ -60,9 +59,9 @@ public class UserController {
     }
 
     @GetMapping("/findPostingJobsById/{id:.+}")
-    public List<String> findPostingJobsById(@PathVariable("id") String id){
+    public List<Long> findPostingJobsById(@PathVariable("id") Long id){
         Optional<User> userOptional = this.userRepository.findById(id);
-        List<String> ret = new ArrayList<>();
+        List<Long> ret = new ArrayList<>();
 
         if(userOptional.isPresent()){
             User user = userOptional.get();
@@ -83,7 +82,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id:.+}")
-    public void delete(@PathVariable("id") String id){
+    public void delete(@PathVariable("id") Long id){
         this.userRepository.deleteById(id);
     }
 }

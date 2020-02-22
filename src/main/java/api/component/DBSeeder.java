@@ -1,13 +1,11 @@
 package api.component;
 
-import api.domain.job.Job;
-import api.domain.job.JobStatus;
-import api.domain.job.JobType;
+import api.domain.order.JobStatus;
+import api.domain.order.JobType;
 import api.repository.JobRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.Random;
 
 
@@ -28,36 +26,36 @@ public class DBSeeder implements CommandLineRunner {
 
         // Implement adding default users
 
-        jobRepository.insert(new Job(
+        jobRepository.insert(new Order(
                 generateUniqueId().toString(),
-                "Job 1",
+                "Order 1",
                 JobType.FOOD,
-                "Test Food Job",
+                "Test Food Order",
                 0,
                 0,
-                JobStatus.ACCEPTED,
+                OrderStatus.ACCEPTED,
                 userId
         ));
 
-        jobRepository.insert(new Job(
+        jobRepository.insert(new Order(
                 generateUniqueId().toString(),
-                "Job 2",
+                "Order 2",
                 JobType.FOOD,
-                "Test Food Job",
+                "Test Food Order",
                 0,
                 0,
-                JobStatus.ACCEPTED,
+                OrderStatus.ACCEPTED,
                 userId
         ));
 
-        jobRepository.insert(new Job(
+        jobRepository.insert(new Order(
                 generateUniqueId().toString(),
-                "Job 3",
+                "Order 3",
                 JobType.RECREATION,
-                "Test Recreation Job",
+                "Test Recreation Order",
                 0,
                 0,
-                JobStatus.PENDING,
+                OrderStatus.PENDING,
                 userId
 
         ));*/

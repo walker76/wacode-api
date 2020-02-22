@@ -1,9 +1,9 @@
 package api.repository;
 
-import api.domain.user.User;
+import api.domain.device.Device;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends MongoRepository<User, Long> {
+public interface DeviceRepository extends MongoRepository<Device, Long> {
 }

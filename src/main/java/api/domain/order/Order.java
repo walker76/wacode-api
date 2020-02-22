@@ -1,47 +1,43 @@
-package api.domain.job;
+package api.domain.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
-import java.util.Date;
 import java.util.Random;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Job {
+public class Order {
 
     @Id
-    String id;
+    long id;
 
     String title;
-    JobType type;
     String description;
     long lat;
     long lang;
-    JobStatus status;
+    OrderStatus status;
 
-    String posterId;
-    String workerId;
+    long posterId;
+    long workerId;
 
-    public Job(JobRequest request){
+    public Order(OrderRequest request){
         this.id = generateUniqueId();
         this.title = request.getTitle();
         this.description = request.getDescription();
         this.lang = request.getLang();
         this.lat = request.getLat();
-        this.type = request.getType();
-        this.posterId = request.getEmail();
-        this.status = JobStatus.PENDING;
+        this.posterId = request.getDeviceId();
+        this.status = OrderStatus.PENDING;
 
     }
 
-    public Job(String id, String title, JobType type, String description, long lat, long lang, JobStatus status, String posterId) {
+    public Order(long id, String title, String description, long lat, long lang, OrderStatus status, long posterId) {
         this.id = id;
         this.title = title;
-        this.type = type;
         this.description = description;
         this.lat = lat;
         this.lang = lang;
@@ -49,10 +45,9 @@ public class Job {
         this.posterId = posterId;
     }
 
-    public Job(String title, JobType type, String description, long lat, long lang, JobStatus status, String posterId) {
+    public Order(String title, String description, long lat, long lang, OrderStatus status, long posterId) {
         this.id = generateUniqueId();
         this.title = title;
-        this.type = type;
         this.description = description;
         this.lat = lat;
         this.lang = lang;
@@ -60,13 +55,13 @@ public class Job {
         this.posterId = posterId;
     }
 
-    private String generateUniqueId() {
+    private long generateUniqueId() {
         int val = -1;
 
         do {
             val = new Random().nextInt(200000);
         } while (val < 0);
 
-        return new Integer(val).toString();
+        return (long) val;
     }
 }

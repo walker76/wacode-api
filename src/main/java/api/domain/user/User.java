@@ -14,8 +14,8 @@ import java.util.List;
 public class User {
     @Id
     String email;
-    List<String> jobsPosted;
-    List<String> jobsWorking;
+    List<Long> jobsPosted;
+    List<Long> jobsWorking;
 
     User(String email){
         this.email = email;
