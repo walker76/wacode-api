@@ -1,6 +1,7 @@
 package api.controller;
 
 import api.domain.auth.AuthRecord;
+import api.exceptions.UserNotRegisteredException;
 import api.repository.AuthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,11 @@ public class AuthController {
     @PutMapping("/login")
     public AuthRecord findById(@RequestBody AuthRecord record){
         Optional<AuthRecord> recordOptional = this.authRepository.findById(record.getEmail());
-        return recordOptional.isPresent() ? recordOptional.get() : null;
+        if(userOptional.isPresent()){
+            return userOptional.get();
+        } else {
+            throw new UserNotRegisteredException();
+        }
     }
 
     @PutMapping("/register")
