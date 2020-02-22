@@ -17,6 +17,7 @@ public class AuthController {
 
     @PutMapping("/login")
     public AuthRecord findById(@RequestBody AuthRecord record){
+        System.out.println(record.getEmail() + " " + record.getPassword());
         Optional<AuthRecord> recordOptional = this.authRepository.findById(record.getEmail());
         if(recordOptional.isPresent()){
             return recordOptional.get();
