@@ -2,7 +2,9 @@ package api.controller;
 
 import api.domain.user.User;
 import api.domain.user.UserRequest;
+import api.repository.AuthRepository;
 import api.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -13,11 +15,8 @@ import java.util.Optional;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserRepository userRepository;
-
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired private UserRepository userRepository;
+    @Autowired private AuthRepository authRepository;
 
     @GetMapping("/all")
     public List<User> getAll(){
