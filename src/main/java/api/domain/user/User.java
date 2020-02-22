@@ -17,17 +17,17 @@ public class User {
     String email;
 
     public User(){
-        this.id = generateUniqueId();
+        this.id = 131849l;
         this.email = null;
     }
 
     public User(String email){
-        this.id = generateUniqueId();
+        this.id = 131849l;
         this.email = email;
     }
 
     public User(UserRequest request){
-        this.id = generateUniqueId();
+        this.id = 131849l;
         this.email = request.getEmail();
     }
 

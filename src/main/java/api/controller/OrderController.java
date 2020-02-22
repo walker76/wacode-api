@@ -1,7 +1,6 @@
 package api.controller;
 
 import api.domain.order.*;
-import api.repository.DeviceRepository;
 import api.repository.OrderRepository;
 import api.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
