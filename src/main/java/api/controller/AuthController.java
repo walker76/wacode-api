@@ -18,8 +18,8 @@ public class AuthController {
     @PutMapping("/login")
     public AuthRecord findById(@RequestBody AuthRecord record){
         Optional<AuthRecord> recordOptional = this.authRepository.findById(record.getEmail());
-        if(userOptional.isPresent()){
-            return userOptional.get();
+        if(recordOptional.isPresent()){
+            return recordOptional.get();
         } else {
             throw new UserNotRegisteredException();
         }
