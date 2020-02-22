@@ -29,7 +29,7 @@ public class DeviceController {
     }
 
     @PutMapping("/register")
-    public Device insert(){
+    public Device register(){
         Device device = new Device();
         this.deviceRepository.insert(device);
         return device;

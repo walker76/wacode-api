@@ -2,6 +2,7 @@ package api.controller;
 
 import api.domain.order.*;
 import api.domain.user.User;
+import api.repository.DeviceRepository;
 import api.repository.OrderRepository;
 import api.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +16,12 @@ public class OrderController {
 
     private OrderRepository orderRepository;
     private UserRepository userRepository;
+    private DeviceRepository deviceRepository;
 
-    public OrderController(OrderRepository orderRepository, UserRepository userRepository) {
+    public OrderController(OrderRepository orderRepository, UserRepository userRepository, DeviceRepository deviceRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
+        this.deviceRepository = deviceRepository;
     }
 
     @GetMapping("/all")
@@ -26,10 +29,20 @@ public class OrderController {
         return this.orderRepository.findAll();
     }
 
-    @GetMapping("/findById/{id}")
+    @GetMapping("/findByOrderId/{id}")
     public Order findById(@PathVariable("id") long id){
         Optional<Order> orderOpt = this.orderRepository.findById(id);
         return orderOpt.isPresent() ? orderOpt.get() : null;
+    }
+
+    @GetMapping("/findByDeviceId/{id}")
+    public List<Order> findByDeviceId(@PathVariable("id") long id){
+        return this.orderRepository.findAllByPosterIdIs(id);
+    }
+
+    @GetMapping("/findByWorkerId/{id}")
+    public List<Order> findByWorkerId(@PathVariable("id") long id){
+        return this.orderRepository.findAllByWorkerIdIs(id);
     }
 
     @GetMapping("/findByStatus/{orderStatus}")
@@ -37,20 +50,12 @@ public class OrderController {
         return this.orderRepository.findAllByStatusIs(orderStatus);
     }
 
-    @PutMapping("/updateJobStatus/")
+    @PutMapping("/updateOrderStatus/")
     public void getByJobType(@RequestBody OrderUpdateRequest orderUpdateRequest){
-        Optional<Order> optionalJob = this.orderRepository.findById(orderUpdateRequest.getId());
-        if(optionalJob.isPresent()){
-            Order order = optionalJob.get();
+        Optional<Order> optionalOrder = this.orderRepository.findById(orderUpdateRequest.getId());
+        if(optionalOrder.isPresent()){
+            Order order = optionalOrder.get();
             order.setStatus(orderUpdateRequest.getStatus());
-            if(orderUpdateRequest.getStatus().equals(OrderStatus.ACCEPTED)){
-                Optional<User> optionalUser = userRepository.findById(orderUpdateRequest.getWorkerId());
-                if(optionalUser.isPresent()){
-                    User user = optionalUser.get();
-                    user.getJobsWorking().add(orderUpdateRequest.getId());
-                    userRepository.save(user);
-                }
-            }
             order.setWorkerId(orderUpdateRequest.getWorkerId());
             this.orderRepository.save(order);
         }
@@ -59,9 +64,6 @@ public class OrderController {
     @PutMapping("/insert")
     public void insert(@RequestBody OrderRequest orderRequest){
         Order newOrder = new Order(orderRequest);
-        User user = userRepository.findById(newOrder.getPosterId()).get();
-        user.getJobsPosted().add(newOrder.getId());
-        userRepository.save(user);
         this.orderRepository.insert(newOrder);
     }
 

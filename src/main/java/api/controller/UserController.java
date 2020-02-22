@@ -30,20 +30,8 @@ public class UserController {
         return userOptional.isPresent() ? userOptional.get() : null;
     }
 
-    @GetMapping("/findWorkingOrdersById/{id:.+}")
-    public List<Long> findWorkingOrdersById(@PathVariable("id") long id){
-        Optional<User> userOptional = this.userRepository.findById(id);
-        List<Long> ret = new ArrayList<>();
-
-        if(userOptional.isPresent()){
-            User user = userOptional.get();
-            return user.getJobsWorking();
-        }
-        return ret;
-    }
-
-    @PutMapping("/insert")
-    public void insert(@RequestBody UserRequest request){
+    @PutMapping("/register")
+    public void register(@RequestBody UserRequest request){
         this.userRepository.insert(new User(request));
     }
 

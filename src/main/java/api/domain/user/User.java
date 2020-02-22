@@ -15,25 +15,20 @@ public class User {
     @Id
     Long id;
     String email;
-    List<Long> jobsWorking;
 
     public User(){
         this.id = generateUniqueId();
         this.email = null;
-        this.jobsWorking = new ArrayList<>();
     }
 
     public User(String email){
         this.id = generateUniqueId();
         this.email = email;
-        this.jobsWorking = new ArrayList<>();
     }
 
     public User(UserRequest request){
         this.id = generateUniqueId();
         this.email = request.getEmail();
-        this.jobsWorking = new ArrayList<>();
-
     }
 
     private long generateUniqueId() {

@@ -11,4 +11,6 @@ import java.util.List;
 public interface OrderRepository extends MongoRepository<Order, Long> {
 
     List<Order> findAllByStatusIs(OrderStatus status);
+    List<Order> findAllByPosterIdIs(Long deviceId);
+    List<Order> findAllByWorkerIdIs(Long workerId);
 }
