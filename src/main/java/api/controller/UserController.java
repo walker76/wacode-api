@@ -1,6 +1,7 @@
 package api.controller;
 
 import api.domain.user.User;
+import api.domain.user.UserRequest;
 import api.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,25 +30,8 @@ public class UserController {
         return userOptional.isPresent() ? userOptional.get() : null;
     }
 
-    @GetMapping("/findOrdersById/{id:.+}")
-    public List<Long> findJobsById(@PathVariable("id") long id){
-        Optional<User> userOptional = this.userRepository.findById(id);
-        List<Long> ret = new ArrayList<>();
-
-        if(userOptional.isPresent()){
-            User user = userOptional.get();
-            List<Long> posted = user.getJobsPosted();
-            List<Long> working = user.getJobsWorking();
-            List<Long> combined = new ArrayList<>();
-            combined.addAll(working);
-            combined.addAll(posted);
-            return combined;
-        }
-        return ret;
-    }
-
     @GetMapping("/findWorkingOrdersById/{id:.+}")
-    public List<Long> findWorkingJobsById(@PathVariable("id") long id){
+    public List<Long> findWorkingOrdersById(@PathVariable("id") long id){
         Optional<User> userOptional = this.userRepository.findById(id);
         List<Long> ret = new ArrayList<>();
 
@@ -58,22 +42,9 @@ public class UserController {
         return ret;
     }
 
-    @GetMapping("/findPostingJobsById/{id:.+}")
-    public List<Long> findPostingJobsById(@PathVariable("id") Long id){
-        Optional<User> userOptional = this.userRepository.findById(id);
-        List<Long> ret = new ArrayList<>();
-
-        if(userOptional.isPresent()){
-            User user = userOptional.get();
-            return user.getJobsPosted();
-        }
-        return ret;
-    }
-
     @PutMapping("/insert")
-    public void insert(@RequestBody User user){
-        System.out.println(user);
-        this.userRepository.insert(user);
+    public void insert(@RequestBody UserRequest request){
+        this.userRepository.insert(new User(request));
     }
 
     @PostMapping("/update")

@@ -7,19 +7,42 @@ import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class User {
     @Id
+    Long id;
     String email;
-    List<Long> jobsPosted;
     List<Long> jobsWorking;
 
-    User(String email){
-        this.email = email;
-        this.jobsPosted = new ArrayList<>();
+    public User(){
+        this.id = generateUniqueId();
+        this.email = null;
         this.jobsWorking = new ArrayList<>();
+    }
+
+    public User(String email){
+        this.id = generateUniqueId();
+        this.email = email;
+        this.jobsWorking = new ArrayList<>();
+    }
+
+    public User(UserRequest request){
+        this.id = generateUniqueId();
+        this.email = request.getEmail();
+        this.jobsWorking = new ArrayList<>();
+
+    }
+
+    private long generateUniqueId() {
+        int val = -1;
+
+        do {
+            val = new Random().nextInt(200000);
+        } while (val < 0);
+
+        return (long) val;
     }
 }
