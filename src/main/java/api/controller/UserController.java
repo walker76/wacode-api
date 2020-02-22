@@ -2,7 +2,6 @@ package api.controller;
 
 import api.domain.user.User;
 import api.domain.user.UserRequest;
-import api.exceptions.UserNotRegistered;
 import api.exceptions.UserNotRegisteredException;
 import api.repository.AuthRepository;
 import api.repository.UserRepository;
